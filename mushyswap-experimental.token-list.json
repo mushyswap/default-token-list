@@ -1,0 +1,45 @@
+{
+  "name": "Mushyswap Experimental",
+  "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/logo.svg",
+  "keywords": ["nexus", "mushyswap", "defi"],
+  "timestamp": "2025-03-29T20:41:20.592Z",
+  "tokens": [
+    {
+      "address": "0xFe043387249e426f8ACf8BC6c682825F58242801",
+      "name": "Wrapped NEX",
+      "symbol": "WNEX",
+      "chainId": 393,
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/devnet/0xFe043387249e426f8ACf8BC6c682825F58242801/logo.png"
+    },
+    {
+      "address": "0x1b77c1845456833Fe717BeD25cb643d082A35407",
+      "name": "USDC",
+      "symbol": "USDC",
+      "chainId": 393,
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/devnet/0x1b77c1845456833Fe717BeD25cb643d082A35407/logo.png"
+    },
+    {
+      "address": "0xab55A0090585A97be2b215471cdC7bd57D379D28",
+      "name": "TENSOR",
+      "symbol": "TNSR",
+      "decimals": 9,
+      "chainId": 393,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/devnet/0xab55A0090585A97be2b215471cdC7bd57D379D28/logo.png"
+    },
+    {
+      "address": "0x1abc2516BeCFe492B88e64aCC8e082dd6e694c17",
+      "name": "Nodecoin",
+      "symbol": "NC",
+      "decimals": 9,
+      "chainId": 393,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/devnet/0x1abc2516BeCFe492B88e64aCC8e082dd6e694c17/logo.png"
+    }
+  ],
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  }
+}

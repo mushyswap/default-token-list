@@ -1,0 +1,24 @@
+[
+  {
+    "address": "0xFe043387249e426f8ACf8BC6c682825F58242801",
+    "name": "Wrapped NEX",
+    "symbol": "WNEX"
+  },
+  {
+    "address": "0x1b77c1845456833Fe717BeD25cb643d082A35407",
+    "name": "USDC",
+    "symbol": "USDC"
+  },
+  {
+    "address": "0xab55A0090585A97be2b215471cdC7bd57D379D28",
+    "name": "TENSOR",
+    "symbol": "TNSR",
+    "decimals": 9
+  },
+  {
+    "address": "0x1abc2516BeCFe492B88e64aCC8e082dd6e694c17",
+    "name": "Nodecoin",
+    "symbol": "NC",
+    "decimals": 9
+  }
+]
