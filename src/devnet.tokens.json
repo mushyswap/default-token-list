@@ -20,5 +20,11 @@
     "name": "Nodecoin",
     "symbol": "NC",
     "decimals": 9
+  },
+  {
+    "address": "0xe4B8FfB93f5724ac330230c62F6A9D86f9cb9A36",
+    "name": "CLOUD",
+    "symbol": "CLOUD",
+    "decimals": 18
   }
 ]
