@@ -26,5 +26,11 @@
     "name": "CLOUD",
     "symbol": "CLOUD",
     "decimals": 18
+  },
+  {
+    "address": "0xe6d48da773a94DbD7B9DAf6d5013ffBd9946AB25",
+    "name": "Pippin",
+    "symbol": "Pippin",
+    "decimals": 18
   }
 ]

@@ -1,91 +1,46 @@
-import probe from "probe-image-size";
-import fs from "fs";
-import tokenList from "../mushyswap-experimental.token-list.json";
+// import mushyswapMainnetList from "../mushyswap-mainnet.token-list.json";
+import mushyswapDevnetList from "../mushyswap-devnet.token-list.json";
+import { TokenList } from "@uniswap/token-lists";
+import schema from "@uniswap/token-lists/src/tokenlist.schema.json";
+import Ajv, { Schema } from "ajv";
+import addFormats from "ajv-formats";
+import deepmerge from "deepmerge";
 
-console.info("Validating Image Type and Sizes");
+// export const mainnetList: TokenList = mushyswapMainnetList;
+export const devnetList: TokenList = mushyswapDevnetList;
 
-function validateList(list: typeof tokenList) {
-  const NEED_RESIZING: string[] = [];
-  list.tokens.forEach((token) => {
-    const relative = token.logoURI.replace(
-      "https://raw.githubusercontent.com/mushyswap/default-token-list/master/",
-      "./"
-    );
-    const image = fs.readFileSync(relative);
-    const data = probe.sync(image);
-    let noErrors = true;
-    if (data) {
-      const validHeight = checkSize("height", token, data);
-      const validWidth = checkSize("width", token, data);
-      const validProportions = isSquare(token, data);
-      const validType = checkType(token, data);
-      noErrors = validHeight && validWidth && validType && validProportions;
-    }
-    if (noErrors) {
-      console.log("✅", token.name);
-    } else {
-      NEED_RESIZING.push(relative);
-    }
-  });
+const ajv = new Ajv({ allErrors: true });
+addFormats(ajv);
 
-  if (NEED_RESIZING.length > 0) {
-    console.info("NEED RESIZING");
-    NEED_RESIZING.forEach((image) => console.info(image));
-  } else {
-    console.info("complete 🚀");
-  }
-}
+// Update JSON schema for latest version
+const newSchema: Schema = deepmerge(schema, {
+  definitions: {
+    TokenInfo: {
+      properties: {
+        name: {
+          pattern: "^[ \\w.'+\\-%/À-ÖØ-öø-ÿ:]+$",
+        },
+        tags: {
+          maxItems: schema.definitions.TokenInfo.properties.tags.maxItems,
+        },
+      },
+    },
+  },
+});
+delete newSchema.definitions.TokenInfo.properties.tags.maxLength;
 
-validateList(tokenList);
+const tokenListValidator = ajv.compile(newSchema);
 
-function isSquare(token: { symbol: string }, data: probe.ProbeResult) {
-  if (data.width !== data.height) {
+const validateList = (list: TokenList) => {
+  const name = list.name;
+  if (!tokenListValidator(list)) {
     console.error(
-      "🟨",
-      token.symbol,
-      "height must be same as width",
-      "height:",
-      data.height,
-      "width:",
-      data.width
+      `Invalid list "${name}"`,
+      JSON.stringify(tokenListValidator.errors, null, 2)
     );
-    return false;
+    throw new Error("Could not validate list: " + name);
   }
-  return true;
-}
+};
 
-function checkSize(
-  side: "height" | "width",
-  token: { symbol: string },
-  data: probe.ProbeResult
-) {
-  if (data.type == "svg") {
-    return true;
-  }
-  if ((data[side] || 0) > 200) {
-    console.error(
-      "⚠️",
-      token.symbol,
-      side,
-      "is",
-      data[side],
-      "should be less than or equal to 200"
-    );
-    return false;
-  }
-  return true;
-}
-
-function checkType(token: { symbol: string }, data: probe.ProbeResult) {
-  if ("png" !== data.type && "svg" !== data.type) {
-    console.error(
-      "⛔️",
-      token.symbol,
-      "is",
-      data.type,
-      ". Tokens must be png or svg."
-    );
-    return false;
-  }
-  return true;
-}
+// Validate both lists
+[devnetList].forEach(validateList);

@@ -12,7 +12,8 @@ const LOGO_URI_BASE =
 
 const makeTokenList = (
   previousTokenList: TokenList | null,
-  tokens: TokenInfo[]
+  tokens: TokenInfo[],
+  network: string
 ): TokenList => {
   let timestamp: string = new Date().toISOString();
   if (process.env.CI) {
@@ -22,7 +23,7 @@ const makeTokenList = (
     timestamp = previousTokenList.timestamp;
   }
   return {
-    name: previousTokenList?.name ?? "Unknown List",
+    name: `${network.charAt(0).toUpperCase() + network.slice(1)} List`,
     logoURI: `${LOGO_URI_BASE}/logo.svg`,
     keywords: ["nexus", "mushyswap", "defi"],
     timestamp,
@@ -41,7 +42,6 @@ const main = async () => {
       const network = el.chainId === 393 ? "devnet" : "mainnet";
       const logoURI = `${LOGO_URI_BASE}/assets/${network}/${el.address}/logo.png`;
 
-      // Validate logo existence
       const logoPath = `${__dirname}/..${logoURI.substring(
         LOGO_URI_BASE.length
       )}`;
@@ -62,41 +62,50 @@ const main = async () => {
 
   const [mainTokenListTokens, experimentalTokenListTokens] = allTokens.reduce(
     ([mainTokens, experimentalTokens], { isExperimental, ...tok }) => {
-      if (isExperimental !== true && tok.chainId === 393) {
+      const network = tok.chainId === 393 ? "devnet" : "mainnet";
+      if (isExperimental !== true && network === "mainnet") {
         return [
           [...mainTokens, tok],
           [...experimentalTokens, tok],
         ];
-      } else {
+      } else if (network === "devnet") {
         return [mainTokens, [...experimentalTokens, tok]];
+      } else {
+        return [mainTokens, experimentalTokens];
       }
     },
     [[] as TokenInfo[], [] as TokenInfo[]]
   );
 
-  const previousTokenList = requireOrNull(
+  // const previousMainnetTokenList = requireOrNull(
+  //   __dirname,
+  //   "../mushyswap-mainnet.token-list.json"
+  // );
+
+  const previousDevnetTokenList = requireOrNull(
     __dirname,
-    "../mushyswap.token-list.json"
-  );
-  const previousExperimentalTokenList = requireOrNull(
-    __dirname,
-    "../mushyswap-experimental.token-list.json"
+    "../mushyswap-devnet.token-list.json"
   );
 
-  const tokenList = makeTokenList(previousTokenList, mainTokenListTokens);
-  const experimentalTokenList = makeTokenList(
-    previousExperimentalTokenList,
-    experimentalTokenListTokens
+  // const mainnetTokenList = makeTokenList(
+  //   previousMainnetTokenList,
+  //   mainTokenListTokens,
+  //   "mainnet"
+  // );
+  const devnetTokenList = makeTokenList(
+    previousDevnetTokenList,
+    experimentalTokenListTokens,
+    "devnet"
   );
+
+  // await fs.writeFile(
+  //   __dirname + "/../mushyswap-mainnet.token-list.json",
+  //   JSON.stringify(mainnetTokenList, null, 2)
+  // );
 
   await fs.writeFile(
-    __dirname + "/../mushyswap.token-list.json",
-    JSON.stringify(tokenList, null, 2)
-  );
-
-  await fs.writeFile(
-    __dirname + "/../mushyswap-experimental.token-list.json",
-    JSON.stringify(experimentalTokenList, null, 2)
+    __dirname + "/../mushyswap-devnet.token-list.json",
+    JSON.stringify(devnetTokenList, null, 2)
   );
 };
 
