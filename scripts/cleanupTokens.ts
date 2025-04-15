@@ -1,13 +1,9 @@
 import { getAddress } from "@ethersproject/address";
 import * as fs from "fs/promises";
 import * as process from "process";
-import {
-  NEXUS_NETWORK_NAMES,
-  getNetworkTokens,
-  INexusNetwork,
-} from "./utils/rawTokens";
+import { NETWORK_NAMES, getNetworkTokens, INetwork } from "./utils/rawTokens";
 
-const cleanupTokens = async (network: INexusNetwork) => {
+const cleanupTokens = async (network: INetwork) => {
   const file = `${__dirname}/../src/${network}.tokens.json`;
 
   //const tokens = getNetworkTokens(network)
@@ -28,7 +24,7 @@ const cleanupTokens = async (network: INexusNetwork) => {
 
 const main = async () => {
   console.log("Fixing addresses...");
-  await Promise.all(NEXUS_NETWORK_NAMES.map(cleanupTokens));
+  await Promise.all(NETWORK_NAMES.map(cleanupTokens));
   console.log("Fixed and files overwritten");
 };
 

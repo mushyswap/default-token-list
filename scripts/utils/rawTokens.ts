@@ -1,5 +1,6 @@
 import mainnet from "../../src/mainnet.tokens.json";
 import devnet from "../../src/devnet.tokens.json";
+import lightchain from "../../src/lightchain.tokens.json";
 import { TokenInfo } from "@uniswap/token-lists";
 
 type IRawToken = Pick<TokenInfo, "address" | "name" | "symbol"> &
@@ -10,18 +11,19 @@ type IRawToken = Pick<TokenInfo, "address" | "name" | "symbol"> &
 
 type IRawTokenListJson = readonly IRawToken[];
 
-export const NEXUS_NETWORK_NAMES = ["devnet", "mainnet"] as const;
-export type INexusNetwork = typeof NEXUS_NETWORK_NAMES[number];
+export const NETWORK_NAMES = ["devnet", "mainnet", "lightchain"] as const;
+export type INetwork = typeof NETWORK_NAMES[number];
 
 // assert the JSON is valid
 const rawTokensJson: {
-  [network in INexusNetwork]: [number, IRawTokenListJson];
+  [network in INetwork]: [number, IRawTokenListJson];
 } = {
   devnet: [393, devnet],
   mainnet: [392, mainnet],
+  lightchain: [504, lightchain],
 };
 
-export const getNetworkTokens = (network: INexusNetwork): IRawTokenListJson =>
+export const getNetworkTokens = (network: INetwork): IRawTokenListJson =>
   rawTokensJson[network][1];
 
 export const rawTokens: readonly (IRawToken & {
