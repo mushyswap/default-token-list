@@ -1,0 +1,45 @@
+{
+  "name": "Mushy Testnet List",
+  "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/logo.svg",
+  "keywords": ["mushyswap", "defi", "lightchain", "mushy", "lightchainAis"],
+  "timestamp": "2025-04-19T07:49:55.115Z",
+  "tokens": [
+    {
+      "address": "0x501606f3972A9e00B2DDd44C7E38fe9c22B4e351",
+      "name": "Wrapped LCAI",
+      "symbol": "WLCAI",
+      "chainId": 504,
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/testnet/0x501606f3972A9e00B2DDd44C7E38fe9c22B4e351/logo.png"
+    },
+    {
+      "address": "0xD6A5225DD0E862BC5E2BFfB551115d69ff741aB0",
+      "name": "USDC",
+      "symbol": "USDC",
+      "chainId": 504,
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/testnet/0xD6A5225DD0E862BC5E2BFfB551115d69ff741aB0/logo.png"
+    },
+    {
+      "address": "0xFe043387249e426f8ACf8BC6c682825F58242801",
+      "name": "USDT",
+      "symbol": "USDT",
+      "chainId": 504,
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/testnet/0xFe043387249e426f8ACf8BC6c682825F58242801/logo.png"
+    },
+    {
+      "address": "0x1A52Cb9E66C0350Ed722dc38cB299A6F81041233",
+      "name": "Pippin",
+      "symbol": "Pippin",
+      "decimals": 18,
+      "chainId": 504,
+      "logoURI": "https://raw.githubusercontent.com/mushyswap/default-token-list/master/assets/testnet/0x1A52Cb9E66C0350Ed722dc38cB299A6F81041233/logo.png"
+    }
+  ],
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 2
+  }
+}

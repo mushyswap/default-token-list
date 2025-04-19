@@ -1,13 +1,11 @@
-import mushyswapdevnetList from "../mushyswap-devnet.token-list.json";
-import mushyswapLightchainList from "../mushyswap-lightchain.token-list.json";
+import mushyswapTestnetList from "../mushyswap-testnet.token-list.json";
 import { TokenList } from "@uniswap/token-lists";
 import schema from "@uniswap/token-lists/src/tokenlist.schema.json";
 import Ajv, { Schema } from "ajv";
 import addFormats from "ajv-formats";
 import deepmerge from "deepmerge";
 
-export const devnetList: TokenList = mushyswapdevnetList;
-export const lightchainList: TokenList = mushyswapLightchainList;
+export const testnetList: TokenList = mushyswapTestnetList;
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
@@ -42,4 +40,4 @@ const validateList = (list: TokenList) => {
   }
 };
 
-[devnetList, lightchainList].map(validateList);
+[testnetList].map(validateList);
